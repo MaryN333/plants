@@ -1,6 +1,7 @@
 package cz.wz.marysidy;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Plant {
     private String name;
@@ -29,6 +30,7 @@ public class Plant {
         this(name, 7);
     }
 
+    // GETTERS AND SETTERS
     public String getName() {
         return name;
     }
@@ -67,6 +69,19 @@ public class Plant {
 
     public void setFrequencyOfWatering(int frequencyOfWatering) {
         this.frequencyOfWatering = frequencyOfWatering;
+    }
+
+    public String getWateringInfo(){
+        return name + ", datum poslední zálivky " + watering.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                + ", datum doporučené další zálivky " + nextWatering();
+    }
+
+    public String nextWatering(){
+        return (watering.plusDays(frequencyOfWatering)).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
+
+    public void doWateringNow(){
+        watering = LocalDate.now();
     }
 
     @Override
