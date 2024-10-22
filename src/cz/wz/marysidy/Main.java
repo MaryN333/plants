@@ -6,24 +6,61 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Plant p1 = new Plant("Dendrobium nobile", "Dendrobium nobile is one of the most widespread ornamental members of the orchid family",
-                LocalDate.of(2024, 10, 15),
-                LocalDate.of(2024,10, 18), 3);
-        Plant p2 = new Plant("Phalaenopsis", 3);
-        Plant p3 = new Plant("Cattleya");
-
         List<Plant> plants = new ArrayList<>();
-        plants.add(p1);
-        plants.add(p2);
-        plants.add(p3);
-//        plants.forEach(plant -> System.out.println(plant));
-        plants.forEach(System.out::println);
+        Plant p1 = null;
+        Plant p2 = null;
+        Plant p3 = null;
+        try {
+            p1 = new Plant("Dendrobium nobile", "Dendrobium nobile is one of the most widespread ornamental members of the orchid family",
+                    LocalDate.of(2024, 10, 15),
+                    LocalDate.of(2024, 10, 10), 3);
+            plants.add(p1);
+        } catch (PlantException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        try{
+            p2 = new Plant("Phalaenopsis", -3);
+            plants.add(p2);
+        } catch (PlantException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        try {
+            p3 = new Plant("Cattleya");
+            plants.add(p3);
+        } catch (PlantException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
-        System.out.println(p1.getWateringInfo());
 
-        p1.doWateringNow();
-        System.out.println(p1.getWateringInfo());
+        plants.forEach(plant -> System.out.println(plant));
+//        plants.forEach(System.out::println);
 
+//        plants.forEach(plant -> {
+//            if (plant != null) {
+//                System.out.println(plant);
+//            }
+//        });
+
+        if (p1 != null) {
+            System.out.println(p1.getWateringInfo());
+            p1.doWateringNow();
+            System.out.println(p1.getWateringInfo());
+        }
+
+
+        if (p1 != null) {
+            try {
+                p1.setFrequencyOfWatering(-5);
+            } catch (PlantException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Plant p1 was not created due to previous errors.");
+        }
+
+        if (p3 != null) {
+            System.out.println(p3.getFrequencyOfWatering());
+        }
 
     }
 }

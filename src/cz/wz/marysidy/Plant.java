@@ -12,7 +12,13 @@ public class Plant {
 
     // CONSTRUCTORS
     // jeden pro nastavení všech atributů
-    public Plant(String name, String notes, LocalDate planted, LocalDate watering, int frequencyOfWatering) {
+    public Plant(String name, String notes, LocalDate planted, LocalDate watering, int frequencyOfWatering) throws PlantException{
+        if (frequencyOfWatering <= 0) {
+            throw new PlantException("Frequency of watering must be be greater than zero. The object was NOT created");
+        }
+        if (watering.isBefore(planted)) {
+            throw new PlantException("The last watering date cannot be earlier than the planted date. The object was NOT created");
+        }
         this.name = name;
         this.notes = notes;
         this.planted = planted;
@@ -21,12 +27,12 @@ public class Plant {
     }
 
     // druhý nastaví jako poznámku prázdný řetězec a datum zasazení i datum poslední zálivky nastaví na dnešní datum
-    public Plant(String name, int frequencyOfWatering){
+    public Plant(String name, int frequencyOfWatering) throws PlantException{
         this(name, "", LocalDate.now(), LocalDate.now(), frequencyOfWatering);
     }
 
     // třetí nastaví totéž co druhý a navíc výchozí frekvenci zálivky na 7 dnů
-    public Plant(String name){
+    public Plant(String name) throws PlantException{
         this(name, 7);
     }
 
@@ -59,7 +65,10 @@ public class Plant {
         return watering;
     }
 
-    public void setWatering(LocalDate watering) {
+    public void setWatering(LocalDate watering) throws PlantException {
+        if (watering.isBefore(planted)){
+            throw new PlantException("It`s impossible to set the last watering date earlier than the planted date.");
+        }
         this.watering = watering;
     }
 
@@ -67,7 +76,10 @@ public class Plant {
         return frequencyOfWatering;
     }
 
-    public void setFrequencyOfWatering(int frequencyOfWatering) {
+    public void setFrequencyOfWatering(int frequencyOfWatering) throws PlantException{
+        if (frequencyOfWatering <= 0) {
+            throw new PlantException("It`s impossible to set the frequency of watering, must be greater than zero.");
+        }
         this.frequencyOfWatering = frequencyOfWatering;
     }
 
