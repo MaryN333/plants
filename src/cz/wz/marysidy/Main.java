@@ -15,9 +15,13 @@ public class Main {
                     LocalDate.of(2024, 10, 15),
                     LocalDate.of(2024, 10, 10), 3);
             plants.add(p1);
+            System.out.println(p1.getWateringInfo());
+            p1.doWateringNow();
+            System.out.println(p1.getWateringInfo());
         } catch (PlantException e) {
             System.out.println("Error: " + e.getMessage());
         }
+
         try{
             p2 = new Plant("Phalaenopsis", -3);
             plants.add(p2);
@@ -31,7 +35,6 @@ public class Main {
             System.out.println("Error: " + e.getMessage());
         }
 
-
         plants.forEach(plant -> System.out.println(plant));
 //        plants.forEach(System.out::println);
 
@@ -41,26 +44,6 @@ public class Main {
 //            }
 //        });
 
-        if (p1 != null) {
-            System.out.println(p1.getWateringInfo());
-            p1.doWateringNow();
-            System.out.println(p1.getWateringInfo());
-        }
-
-
-        if (p1 != null) {
-            try {
-                p1.setFrequencyOfWatering(-5);
-            } catch (PlantException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Plant p1 was not created due to previous errors.");
-        }
-
-        if (p3 != null) {
-            System.out.println(p3.getFrequencyOfWatering());
-        }
 
     }
 }
