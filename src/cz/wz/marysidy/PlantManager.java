@@ -2,9 +2,11 @@ package cz.wz.marysidy;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class PlantManager {
+public class PlantManager{
     private List<Plant> plantList = new ArrayList<>();
 
     public List<Plant> getPlantList() {
@@ -45,6 +47,16 @@ public class PlantManager {
         boolean isRemoved = plantList.remove(plant);
         System.out.println(isRemoved ?
                 "The plant " + name + " has been removed." : "The plant " + name + " was NOT removed, was not in the list");
+    }
+
+    // Sorting by name
+    public void sortPlantsByName() {
+        Collections.sort(plantList);
+    }
+
+    // Sorting by last watering
+    public void sortPlantsByWatering() {
+        Collections.sort(plantList, Comparator.comparing(Plant::getWatering));
     }
 
 }

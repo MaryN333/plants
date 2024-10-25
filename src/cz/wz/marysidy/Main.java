@@ -52,6 +52,21 @@ public class Main {
         manager1.getPlantList().forEach(System.out::println);
         manager1.removePlant(p4);
 
+        System.out.println("-*".repeat(20));
+        System.out.println("Without sorting:");
+        manager1.getPlantList().forEach(System.out::println);
+        System.out.println("Sorting by name:");
+        manager1.sortPlantsByName();
+        manager1.getPlantList().forEach(System.out::println);
+        System.out.println("Sorting by last watering:");
+        manager1.sortPlantsByWatering();
+        manager1.getPlantList().forEach(System.out::println);
+
+
+
+
+
+
 
 
 

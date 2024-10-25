@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Plant {
+public class Plant implements Comparable<Plant>{
     private String name;
     private String notes;
     private LocalDate planted;
@@ -141,5 +141,10 @@ public class Plant {
                 ", watering=" + watering +
                 ", frequencyOfWatering=" + frequencyOfWatering +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Plant o) {
+        return this.name.compareToIgnoreCase(o.name);
     }
 }
