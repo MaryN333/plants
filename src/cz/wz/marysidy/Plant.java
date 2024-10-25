@@ -2,6 +2,7 @@ package cz.wz.marysidy;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Plant {
     private String name;
@@ -14,10 +15,10 @@ public class Plant {
     // jeden pro nastavení všech atributů
     public Plant(String name, String notes, LocalDate planted, LocalDate watering, int frequencyOfWatering) throws PlantException{
         if (frequencyOfWatering <= 0) {
-            throw new PlantException("Frequency of watering must be be greater than zero. The object was NOT created");
+            throw new PlantException(name + ". The object was NOT created. Frequency of watering must be be greater than zero.");
         }
         if (watering.isBefore(planted)) {
-            throw new PlantException("The last watering date cannot be earlier than the planted date. The object was NOT created");
+            throw new PlantException(name + ". The object was NOT created. The last watering date cannot be earlier than the planted date.");
         }
         this.name = name;
         this.notes = notes;
@@ -31,10 +32,29 @@ public class Plant {
         this(name, "", LocalDate.now(), LocalDate.now(), frequencyOfWatering);
     }
 
-    // třetí nastaví totéž co druhý a navíc výchozí frekvenci zálivky na 7 dnů
+    // třetí nastaví totéž co druhý a navíc výchozí frekvenci zálivky na 7 dnů
     public Plant(String name) throws PlantException{
         this(name, 7);
     }
+
+    // Three methods for creating Plant
+    public static Plant createPlant(String name, String notes, LocalDate planted, LocalDate watering, int frequencyOfWatering) {
+        try {
+            return new Plant(name, notes, planted, watering, frequencyOfWatering);
+        } catch (PlantException e) {
+            System.err.println("Error creating plant: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static Plant createPlant(String name, int frequencyOfWatering) {
+        return createPlant(name, "", LocalDate.now(), LocalDate.now(), frequencyOfWatering);
+    }
+
+    public static Plant createPlant(String name) {
+        return createPlant(name, 7);
+    }
+
 
     // GETTERS AND SETTERS
     public String getName() {
@@ -94,6 +114,22 @@ public class Plant {
 
     public void doWateringNow(){
         watering = LocalDate.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Plant plant)) return false;
+        return getFrequencyOfWatering() == plant.getFrequencyOfWatering() &&
+                Objects.equals(getName(), plant.getName()) &&
+                Objects.equals(getNotes(), plant.getNotes()) &&
+                Objects.equals(getPlanted(), plant.getPlanted()) &&
+                Objects.equals(getWatering(), plant.getWatering());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getNotes(), getPlanted(), getWatering(), getFrequencyOfWatering());
     }
 
     @Override
