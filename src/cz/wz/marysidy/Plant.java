@@ -7,13 +7,13 @@ import java.util.Objects;
 public class Plant implements Comparable<Plant>{
     private String name;
     private String notes;
+    private int frequencyOfWatering;
     private LocalDate planted;
     private LocalDate watering;
-    private int frequencyOfWatering;
 
     // CONSTRUCTORS
     // jeden pro nastavení všech atributů
-    public Plant(String name, String notes, LocalDate planted, LocalDate watering, int frequencyOfWatering) throws PlantException{
+    public Plant(String name, String notes, int frequencyOfWatering, LocalDate planted, LocalDate watering) throws PlantException{
         if (frequencyOfWatering <= 0) {
             throw new PlantException(name + ". The object was NOT created. Frequency of watering must be be greater than zero.");
         }
@@ -29,7 +29,7 @@ public class Plant implements Comparable<Plant>{
 
     // druhý nastaví jako poznámku prázdný řetězec a datum zasazení i datum poslední zálivky nastaví na dnešní datum
     public Plant(String name, int frequencyOfWatering) throws PlantException{
-        this(name, "", LocalDate.now(), LocalDate.now(), frequencyOfWatering);
+        this(name, "", frequencyOfWatering, LocalDate.now(), LocalDate.now());
     }
 
     // třetí nastaví totéž co druhý a navíc výchozí frekvenci zálivky na 7 dnů
@@ -38,9 +38,9 @@ public class Plant implements Comparable<Plant>{
     }
 
     // Three methods for creating Plant
-    public static Plant createPlant(String name, String notes, LocalDate planted, LocalDate watering, int frequencyOfWatering) {
+    public static Plant createPlant(String name, String notes, int frequencyOfWatering, LocalDate planted, LocalDate watering) {
         try {
-            return new Plant(name, notes, planted, watering, frequencyOfWatering);
+            return new Plant(name, notes, frequencyOfWatering, planted, watering);
         } catch (PlantException e) {
             System.err.println("Error creating plant: " + e.getMessage());
             return null;
@@ -48,7 +48,7 @@ public class Plant implements Comparable<Plant>{
     }
 
     public static Plant createPlant(String name, int frequencyOfWatering) {
-        return createPlant(name, "", LocalDate.now(), LocalDate.now(), frequencyOfWatering);
+        return createPlant(name, "", frequencyOfWatering, LocalDate.now(), LocalDate.now());
     }
 
     public static Plant createPlant(String name) {
@@ -137,9 +137,9 @@ public class Plant implements Comparable<Plant>{
         return "Plant{" +
                 "name='" + name + '\'' +
                 ", notes='" + notes + '\'' +
+                ", frequencyOfWatering=" + frequencyOfWatering +
                 ", planted=" + planted +
                 ", watering=" + watering +
-                ", frequencyOfWatering=" + frequencyOfWatering +
                 '}';
     }
 
