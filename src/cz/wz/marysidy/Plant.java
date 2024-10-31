@@ -13,7 +13,7 @@ public class Plant implements Comparable<Plant>{
 
     // CONSTRUCTORS
     // jeden pro nastavení všech atributů
-    public Plant(String name, String notes, int frequencyOfWatering, LocalDate planted, LocalDate watering) throws PlantException{
+    public Plant(String name, String notes, int frequencyOfWatering, LocalDate watering, LocalDate planted) throws PlantException{
         if (frequencyOfWatering <= 0) {
             throw new PlantException(name + ". The object was NOT created. Frequency of watering must be be greater than zero.");
         }
@@ -22,9 +22,9 @@ public class Plant implements Comparable<Plant>{
         }
         this.name = name;
         this.notes = notes;
-        this.planted = planted;
-        this.watering = watering;
         this.frequencyOfWatering = frequencyOfWatering;
+        this.watering = watering;
+        this.planted = planted;
     }
 
     // druhý nastaví jako poznámku prázdný řetězec a datum zasazení i datum poslední zálivky nastaví na dnešní datum
@@ -38,9 +38,9 @@ public class Plant implements Comparable<Plant>{
     }
 
     // Three methods for creating Plant
-    public static Plant createPlant(String name, String notes, int frequencyOfWatering, LocalDate planted, LocalDate watering) {
+    public static Plant createPlant(String name, String notes, int frequencyOfWatering, LocalDate watering, LocalDate planted) {
         try {
-            return new Plant(name, notes, frequencyOfWatering, planted, watering);
+            return new Plant(name, notes, frequencyOfWatering, watering, planted);
         } catch (PlantException e) {
             System.err.println("Error creating plant: " + e.getMessage());
             return null;
@@ -129,18 +129,18 @@ public class Plant implements Comparable<Plant>{
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getNotes(), getPlanted(), getWatering(), getFrequencyOfWatering());
+        return Objects.hash(getName(), getNotes(), getFrequencyOfWatering(), getWatering(), getPlanted());
     }
 
     @Override
     public String toString() {
-        return "Plant{" +
-                "name='" + name + '\'' +
-                ", notes='" + notes + '\'' +
-                ", frequencyOfWatering=" + frequencyOfWatering +
-                ", planted=" + planted +
-                ", watering=" + watering +
-                '}';
+        String shortNotes = notes.length() > 30 ? notes.substring(0, 30) + "..." : notes;
+        return String.format("%-35s %-35s %-5s %-15s %-15s",
+                name,
+                shortNotes,
+                frequencyOfWatering,
+                watering,
+                planted);
     }
 
     @Override

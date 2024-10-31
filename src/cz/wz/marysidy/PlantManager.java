@@ -18,9 +18,9 @@ public class PlantManager{
     public void addPlant(Plant plant){
         if (plant != null) {
             plantList.add(plant);
-            System.out.println("Plant added: " + plant.getName());
+            System.out.println("(Message from method addPlant() in PlantManager): Plant added: " + plant.getName());
         } else {
-            System.out.println("Plant is null and cannot be added.");
+            System.out.println("(Message from method addPlant() in PlantManager): Plant is null and cannot be added.");
         }
     }
 
@@ -46,6 +46,10 @@ public class PlantManager{
         boolean isRemoved = plantList.remove(plant);
         System.out.println(isRemoved ?
                 "The plant " + name + " has been removed." : "The plant " + name + " was NOT removed, was not in the list");
+    }
+
+    public void removePlantOnIndex(int index){
+        plantList.remove(index);
     }
 
     // Sorting by name
@@ -76,9 +80,9 @@ public class PlantManager{
                     String name = parts[0].trim();
                     String notes = parts[1].trim();
                     int frequencyOfWatering = Integer.parseInt(parts[2]);
-                    LocalDate planted = LocalDate.parse(parts[3]);
-                    LocalDate watering = LocalDate.parse(parts[4]);
-                    plantList.add(new Plant(name, notes, frequencyOfWatering, planted, watering));
+                    LocalDate watering = LocalDate.parse(parts[3]);
+                    LocalDate planted = LocalDate.parse(parts[4]);
+                    plantList.add(new Plant(name, notes, frequencyOfWatering, watering, planted));
                 } catch (DateTimeParseException e) {
                     System.err.println("Incorrect date format on line " + lineNumber + ": " + e.getMessage());
                     plantList.clear(); // Clear the list when there is a date format error
@@ -102,8 +106,8 @@ public class PlantManager{
                         plant.getName() + delimiter
                                 + plant.getNotes() + delimiter
                                 + plant.getFrequencyOfWatering() + delimiter
-                                + plant.getPlanted() + delimiter
-                                + plant.getWatering());
+                                + plant.getWatering() + delimiter
+                                + plant.getPlanted());
             }
         } catch (IOException e) {
             throw new PlantException("Error writing to file " + fileName + ": " + e.getMessage());
